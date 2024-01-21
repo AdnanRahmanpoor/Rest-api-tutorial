@@ -24,12 +24,12 @@ export const login = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(403);
     }
 
-    consr salt = random();
+    const salt = random();
     user.authentication.sessionToken = authentication(salt, user._id.toString())
 
     await user.save();
 
-    res.cookie('ADNAN-APP', user.authentication.sesstionToken, { domain: 'localhost', path: '/'});
+    res.cookie('ADNAN-APP', user.authentication.sessionToken, { domain: 'localhost', path: '/'});
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
