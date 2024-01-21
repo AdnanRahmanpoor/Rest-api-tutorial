@@ -25,11 +25,19 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
 
     const salt = random();
-    user.authentication.sessionToken = authentication(salt, user._id.toString())
+    user.authentication.sessionToken = authentication(
+      salt,
+      user._id.toString(),
+    );
 
     await user.save();
 
-    res.cookie('ADNAN-APP', user.authentication.sessionToken, { domain: 'localhost', path: '/'});
+    res.cookie('ADNAN-AUTH', user.authentication.sessionToken, {
+      domain: 'localhost',
+      path: '/',
+    });
+
+    return res.status(200).json(user).end();
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
